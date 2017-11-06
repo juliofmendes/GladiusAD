@@ -1,0 +1,198 @@
+TODO: VOUCH - Gerar o vouch e salvar no BD junto com as variaveis: VALIDO, USERID, DATA
+/*
+cd ..
+git init
+echo "# Hello" >> README.md
+git add --all
+git commit -m "first commit"
+git remote add origin https://github.com/juliofmendes/Hello.git
+git push origin master
+*/
+
+
+
+
+  <?php
+    if($_SESSION['msg']['passwordchange-err'])
+    {
+        echo '<div class="err">'.$_SESSION['msg']['passwordchange-err'].'</div>';
+        unset($_SESSION['msg']['passwordchange-err']);
+    }
+    if($_SESSION['msg']['passwordchange-success'])
+    {
+        echo '<div class="success">'.$_SESSION['msg']['passwordchange-success'].'</div>';
+        unset($_SESSION['msg']['passwordchange-success']);
+    }
+    ?>
+    
+
+        
+<!--
+<td> &nbsp;<?=$linha['user_key']?>&nbsp; </td>
+<td> &nbsp;<?=$linha['ID']?>&nbsp; </td>
+<td> &nbsp;<?=$linha['Level']?>&nbsp; </td>
+<td> &nbsp;<?=$linha['Status']?>&nbsp; </td>
+<td> &nbsp;<?=$linha['Name']?>&nbsp; </td>
+<td> &nbsp;<?=$linha['Email']?>&nbsp; </td>
+<td> &nbsp;<?=$linha['Senha']?>&nbsp; </td>
+-->
+   
+<?php
+
+    function filter($date)
+    {
+        return trim(htmlspecialchars($date));
+    }
+
+    $nickname = filter($_POST['nickname'])
+    $country = filter($_POST['country'])
+    $date_of_birth = filter($_POST['date_of_birth'])
+    $gender = filter($_POST['gender'])
+    $motto = filter($_POST['motto'])
+    $bio = filter($_POST['bio'])
+
+    if (isUserLogIn)
+    {
+        //SQL update query
+    }
+
+?>
+
+        <?php
+
+function Buscar(){
+//    Localizar no BD
+//    Chamar funcao printf
+//    controle caso n exista a busca
+    
+    $ID = $_POST["ID"];
+    $Email = $_POST["Email"];
+    
+    
+    $statement = mysqli_prepare($con, "SELECT * FROM User WHERE ID = ? OR Email = ?");
+    mysqli_stmt_bind_param($statement, "ss", $ID, $Email);
+    mysqli_stmt_execute($statement);
+    
+    mysqli_stmt_store_result($statement);
+    mysqli_stmt_bind_result($statement, $user_key, $ID, $Level, $Status, $Name, $Email, $Password);
+    
+    $response = array();
+    $response["success"] = false;
+    $response["conection"] = false;
+
+    if (mysqli_sqlstate($con) == 00000) {
+    $response["conection"] = true;  
+    }
+    
+    while(mysqli_stmt_fetch($statement)){
+            $response["success"] = true;  
+            $response["Key"] = $user_key;
+            $response["ID"] = $ID;
+            $response["Level"] = $Level;
+            $response["Status"] = $Status;
+            $response["Name"] = $Name;
+            $response["Email"] = $Email;
+            $response["Password"] = $Password;
+    }
+    
+    echo $response;
+    echo json_encode($response);
+
+    
+}
+
+function Enviar(){
+    Pegar variaveis
+    
+    $ID = $_POST["ID"];
+    $Level = $_POST["Level"];
+    $Status = $_POST["Status"];
+    $Name = $_POST["Name"];
+    $Email = $_POST["Email"];
+    $Password = $_POST["Password"];
+
+    $statement = mysqli_prepare("UPDATE Config SET (ID, Level, Status, Name, Email, Password) VALUES (?, ?, ?, ?, ?, ?) WHERE id = '$ID'");
+    mysqli_stmt_bind_param($statement, "iisss", $Level, $Status, $Name, $Email, $Password);   
+    mysqli_stmt_execute($statement);  
+
+
+    return mysqli_sqlstate($con);
+    mysqli_stmt_close($statement); 
+}
+
+    function GetCODE(){
+
+        include("db_conexao.php");
+        $query = sprintf("SELECT reg_Code FROM Config");
+        $dados = mysql_query($query, $con) or die(mysql_error());
+        $linha = mysql_fetch_assoc($dados);
+        $Code = $linha['reg_Code'];
+        return $Code;
+
+        mysql_close($con);
+        mysql_free_result($dados); 
+
+    }//RETURN $CODE
+
+    function Update(){
+        $Code = GetCODE();
+        ++$Code;
+
+        //$Code = AA001;
+        mysql_query("UPDATE Config SET reg_Code = '$Code' WHERE id = '1'");
+    } //UPDATE CODE++
+    ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                return false;
+            }
+
+            for (String credential : DUMMY_CREDENTIALS) {
+                String[] pieces = credential.split(":");
+                if (pieces[0].equals(mEmail)) {
+                    // Account exists, return true if the password matches.
+                    return pieces[1].equals(mPassword);
+                }
+            }
+
+            // TODO: Register the new account here.
+            // Posso passar as variaveis de EMAIL e SENHA para a ACTIVITY de cadastro.
+//            Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+//            LoginActivity.this.startActivity(registerIntent);
+            return true;
+        }
+        
+        
+        
+
+
+
+
